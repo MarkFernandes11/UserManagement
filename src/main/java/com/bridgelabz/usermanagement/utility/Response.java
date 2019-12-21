@@ -1,4 +1,4 @@
-package com.bridgelabz.usermanagement.exception;
+package com.bridgelabz.usermanagement.utility;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

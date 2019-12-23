@@ -6,6 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.bridgelabz.usermanagement.dto.UserDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
@@ -23,8 +25,8 @@ public class Utility {
 	}
 	
 	
-	public Object mapper(String userJson, UserDto userDto) {
-		Object object = objectMapper.convertValue(userJson, userDto.getClass()); 
+	public Object mapper(String userJson, UserDto userDto) throws JsonMappingException, JsonProcessingException {
+		Object object = objectMapper.readValue(userJson, userDto.getClass()); 
 		
 		return object;
 	}

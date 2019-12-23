@@ -1,5 +1,6 @@
 package com.bridgelabz.usermanagement.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,10 +41,7 @@ public class UserDto {
 	private String password;
 	
 	private String userRole;
+		
+	private List<Permission> permission = new ArrayList<Permission>();
 	
-	private String profilePicture;
-	
-	private List<Permission> permission;
-	
-	private Authentication authentication;
 }

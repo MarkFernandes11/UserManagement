@@ -1,8 +1,10 @@
 package com.bridgelabz.usermanagement.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -73,12 +75,14 @@ public class User {
 	
 	private Date modifiedTime;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<Permission> permissions;
+	private Date lastLogin;
 	
-	@OneToOne
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)	
+	private List<Permission> permissions = new ArrayList<Permission>();
+	
+	@OneToOne(cascade = CascadeType.ALL)
 	private Authentication authentication;
 	
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<LoginHistory> loginList;
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<LoginHistory> loginList = new ArrayList<LoginHistory>();
 }

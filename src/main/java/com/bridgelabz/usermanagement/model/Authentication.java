@@ -21,9 +21,9 @@ public class Authentication {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long authenticationId;
 	
-	private boolean rememberMe;
+	private boolean rememberMe = true;
 	
-	private boolean forgotPassword;
+	private boolean forgotPassword = true;
 	
-	private String name;
+	private String name = "User Management";
 }

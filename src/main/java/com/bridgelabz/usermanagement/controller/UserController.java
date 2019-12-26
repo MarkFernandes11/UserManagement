@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +31,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 @RestController
 @RequestMapping("usermanagement/")
+@CrossOrigin
 public class UserController {
 	
 	@Autowired
@@ -60,7 +62,7 @@ public class UserController {
 	}
 	
 	@PutMapping("resetpassword")
-	public ResponseEntity<Response> resetPassword(@RequestHeader String token, @RequestParam ResetPasswordDto resetPasswordDto) {
+	public ResponseEntity<Response> resetPassword(@RequestHeader String token, @RequestBody ResetPasswordDto resetPasswordDto) {
 		Long id = tokenUtility.decodeToken(token);
 		
 		return new ResponseEntity<Response>( userService.resetPassword(id, resetPasswordDto), HttpStatus.OK);		

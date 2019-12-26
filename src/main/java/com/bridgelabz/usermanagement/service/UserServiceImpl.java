@@ -126,16 +126,14 @@ public class UserServiceImpl implements UserService {
 		User user = userServiceImpl.userPresent(email);
 		
 		String token = tokenUtility.createToken(user.getUserId());
-		String to = email;
-		String body = "http://localhost:8088/usermanagement/resetPassword?token="+token;
+		String body = "http://localhost:4200/resetpassword?token="+token;
 		String subject = "Password recovery mail"; 
 		
 		Email mail = new Email();
-		mail.setTo(to);
+		mail.setTo(email);
 		mail.setBody(body);
 		mail.setSubject(subject);
-		
-		//Error 500
+
 		rabbitTemplate.convertAndSend(routingKey, mail);
 		
 		return new Response(HttpStatus.OK.value(), "Reset password link has been sent on entered email.", null);
@@ -143,14 +141,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public Response resetPassword(Long id, ResetPasswordDto resetPasswordDto) {
-		// TODO Auto-generated method stub
 		User user = userServiceImpl.userPresent(id);
 		
 		if(!resetPasswordDto.getPassword().equals(resetPasswordDto.getConfirmPassword())) {
 			throw new UserException("Password and confirm password does not match");
 		}
 		
-		user.setPassword(resetPasswordDto.getPassword());
+		user.setPassword(passwordEncoder.encode(resetPasswordDto.getPassword()));
 		userRepository.save(user);
 		
 		return new Response(HttpStatus.OK.value(), "Password reset successful", user);

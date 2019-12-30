@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -74,11 +75,22 @@ public class UserServiceImpl implements UserService {
 		loginHistory.setUser(user);
 		user.getLoginList().add(loginHistory);
 		user.setLastLogin(new Date());
+		user.setOnlineStatus(true);
 		
 		userRepository.save(user);
 		
 		return new Response(HttpStatus.OK.value(), "Login successful", token);
 	}
+	
+	@Override
+	public Response logout(Long id) {
+		User user = userPresent(id);
+		user.setOnlineStatus(false);
+		userRepository.save(user);
+		
+		return new Response(HttpStatus.OK.value(), "Logged out", null);
+	}
+	
 	
 	private User userExist(String username) {
 		Optional<User> user = userRepository.findByUsername(username);
@@ -243,10 +255,17 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Response getUser(String token, Long userId) {		
+	public Response getUser(Long userId) {		
 		User user = userPresent(userId); 
 		return new Response(HttpStatus.OK.value(), "Received user", user);
 	}
+	
+//	public Response getUserStats(Long userId) {
+//		List<Object> userStats = new ArrayList<Object>();
+//		List<User> users = userRepository.findAll();
+//		
+//		return null;
+// 	}
 
 	@Override
 	public Response getProfilePicture(Long userId) throws IOException {		

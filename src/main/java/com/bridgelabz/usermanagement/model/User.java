@@ -71,6 +71,8 @@ public class User {
 	
 	private boolean activationStatus;
 	
+	private boolean onlineStatus = false;
+	
 	private Date createTime;
 	
 	private Date modifiedTime;

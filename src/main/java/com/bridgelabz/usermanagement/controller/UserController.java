@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +54,13 @@ public class UserController {
 		return new ResponseEntity<Response>( userService.login(loginDto), HttpStatus.OK);		
 	}
 	
+	@PutMapping("logout")
+	public ResponseEntity<Response> logout(@RequestHeader String token) {
+		Long id = tokenUtility.decodeToken(token);
+		
+		return new ResponseEntity<Response>(userService.logout(id), HttpStatus.OK);
+	}
+	
 	@PutMapping("forgotpassword")
 	public ResponseEntity<Response> forgotPassword(@RequestParam String email) {
 
@@ -98,10 +104,11 @@ public class UserController {
 		return new ResponseEntity<Response>(userService.getUsers(id), HttpStatus.OK);		
 	}
 	
-	@GetMapping("{userId}")
-	public ResponseEntity<Response> getUser(@RequestHeader String token, @PathVariable Long userId) {
+	@GetMapping("user")
+	public ResponseEntity<Response> getUser(@RequestHeader String token) {
+		Long id = tokenUtility.decodeToken(token);
 		
-		return new ResponseEntity<Response>(userService.getUser(token, userId), HttpStatus.OK);		
+		return new ResponseEntity<Response>(userService.getUser(id), HttpStatus.OK);		
 	}
 	
 	@GetMapping("registeredusers")

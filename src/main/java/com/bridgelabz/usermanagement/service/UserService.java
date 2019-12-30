@@ -14,6 +14,8 @@ public interface UserService {
 
 	Response login(LoginDto login);
 	
+	Response logout(Long id);
+	
 	Response forgotPassword(String email);
 	
 	Response resetPassword(Long id, ResetPasswordDto resetPasswordDto);
@@ -24,7 +26,7 @@ public interface UserService {
 	
 	Response getUsers(Long id);
 	
-	Response getUser(String token, Long userId);
+	Response getUser(Long userId);
 	
 	Response getProfilePicture(Long id) throws IOException;
 	

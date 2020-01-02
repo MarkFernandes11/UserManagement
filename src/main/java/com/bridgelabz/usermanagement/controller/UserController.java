@@ -111,6 +111,11 @@ public class UserController {
 		return new ResponseEntity<Response>(userService.getUser(id), HttpStatus.OK);		
 	}
 	
+	@GetMapping("countries")
+	public ResponseEntity<Response> getCountries() {
+		return new ResponseEntity<Response>(userService.getCountries(), HttpStatus.OK);
+	}
+	
 	@GetMapping("registeredusers")
 	public ResponseEntity<Response> getRegisteredUsers(@RequestHeader String token) {
 		Long id = tokenUtility.decodeToken(token);

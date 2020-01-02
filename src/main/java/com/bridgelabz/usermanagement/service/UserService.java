@@ -26,6 +26,8 @@ public interface UserService {
 	
 	Response getUsers(Long id);
 	
+	Response getCountries();
+	
 	Response getUser(Long userId);
 	
 	Response getProfilePicture(Long id) throws IOException;

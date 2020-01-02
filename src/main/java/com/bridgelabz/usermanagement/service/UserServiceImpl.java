@@ -9,7 +9,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -260,12 +262,27 @@ public class UserServiceImpl implements UserService {
 		return new Response(HttpStatus.OK.value(), "Received user", user);
 	}
 	
-//	public Response getUserStats(Long userId) {
-//		List<Object> userStats = new ArrayList<Object>();
-//		List<User> users = userRepository.findAll();
-//		
-//		return null;
-// 	}
+	@Override
+	public Response getCountries() {
+		List<User> users = userRepository.findAll();
+		List<String> countries = new ArrayList<String>();
+		Map<String, Integer> countryMap = new HashMap<String, Integer>();
+		
+		for(User user: users) {
+			countries.add(user.getCountry().toLowerCase());
+		}
+		
+		for(String country : countries) {
+			if(countryMap.containsKey(country)) {
+				countryMap.put(country, countryMap.get(country)+1);
+			}
+			else {
+				countryMap.put(country, 1);
+			}
+		}
+		
+		return new Response(HttpStatus.OK.value(), "Received data", countryMap);
+	}
 
 	@Override
 	public Response getProfilePicture(Long userId) throws IOException {		
